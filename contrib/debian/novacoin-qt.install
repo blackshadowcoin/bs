@@ -1,0 +1,5 @@
+BlackShadowCoin-qt usr/bin
+share/pixmaps/BlackShadowCoin32.xpm usr/share/pixmaps
+share/pixmaps/BlackShadowCoin80.xpm usr/share/pixmaps
+debian/BlackShadowCoin-qt.desktop usr/share/applications
+debian/BlackShadowCoin-qt.protocol usr/share/kde4/services/

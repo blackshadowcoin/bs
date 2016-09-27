@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=BlackShadowCoin
+Comment=BlackShadowCoin P2P Cryptocurrency
+Comment[ru]=BlackShadowCoin, P2P криптовалюта
+Comment[fr]=BlackShadowCoin, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=BlackShadowCoin, eşten eşe kriptografik sanal para birimi
+Exec=/usr/bin/BlackShadowCoin-qt
+Terminal=false
+Type=Application
+Icon=/usr/share/pixmaps/BlackShadowCoin80.xpm
+MimeType=x-scheme-handler/BlackShadowCoin;
+Categories=Office;

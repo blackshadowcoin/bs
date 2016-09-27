@@ -1,0 +1,2 @@
+debian/bin/BlackShadowCoind usr/bin
+src/BlackShadowCoind usr/lib/BlackShadowCoin

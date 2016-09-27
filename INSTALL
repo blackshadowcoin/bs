@@ -1,0 +1,9 @@
+Building BlackShadowCoin
+
+See doc/readme-qt.rst for instructions on building BlackShadowCoin Qt,
+the intended-for-end-users, nice-graphical-interface, reference
+implementation of BlackShadowCoin.
+
+See doc/build-*.txt for instructions on building BlackShadowCoind,
+the intended-for-services, no-graphical-interface, reference
+implementation of BlackShadowCoin.

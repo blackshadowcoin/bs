@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# PROVIDE: BlackShadowCoin
+# REQUIRE: LOGIN
+# KEYWORD: shutdown
+
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# BlackShadowCoin_enable (bool): Set to NO by default. Set this variable to YES if you want to enable BlackShadowCoin service.
+# BlackShadowCoin_config (path): Set to /usr/local/etc/BlackShadowCoin.conf by default.
+# BlackShadowCoin_user:  The user account BlackShadowCoin daemon runs as. It uses 'root' user by default.
+# BlackShadowCoin_group: The group account BlackShadowCoin daemon runs as. It uses 'wheel' group by default.
+# BlackShadowCoin_datadir (str): Default to "/var/db/BlackShadowCoin". Base data directory.
+
+. /etc/rc.subr
+
+name=BlackShadowCoin
+rcvar=BlackShadowCoin_enable
+
+: ${BlackShadowCoin_enable:=NO}
+: ${BlackShadowCoin_config=/usr/local/etc/BlackShadowCoin.conf}
+: ${BlackShadowCoin_datadir=/var/db/BlackShadowCoin}
+: ${BlackShadowCoin_user="root"}
+: ${BlackShadowCoin_group="wheel"}
+
+required_files=${BlackShadowCoin_config}
+command=/usr/local/bin/BlackShadowCoind
+BlackShadowCoin_chdir=${BlackShadowCoin_datadir}
+pidfile="${BlackShadowCoin_datadir}/BlackShadowCoind.pid"
+stop_cmd=BlackShadowCoin_stop
+command_args="-conf=${BlackShadowCoin_config} -datadir=${BlackShadowCoin_datadir} -daemon -pid=${pidfile}"
+start_precmd="${name}_prestart"
+
+BlackShadowCoin_create_datadir()
+{
+	echo "Creating data directory"
+	eval mkdir -p ${BlackShadowCoin_datadir}
+	[ $? -eq 0 ] && chown -R ${BlackShadowCoin_user}:${BlackShadowCoin_group} ${BlackShadowCoin_datadir}
+}
+
+BlackShadowCoin_prestart()
+{
+	if [ ! -d "${BlackShadowCoin_datadir}/." ]; then
+		BlackShadowCoin_create_datadir || return 1
+	fi
+}
+
+BlackShadowCoin_requirepidfile()
+{
+	if [ ! "0`check_pidfile ${pidfile} ${command}`" -gt 1 ]; then
+		echo "${name} not running? (check $pidfile)."
+		exit 1
+	fi
+}
+
+BlackShadowCoin_stop()
+{
+    BlackShadowCoin_requirepidfile
+
+	echo "Stopping ${name}."
+	eval ${command} -conf=${BlackShadowCoin_config} -datadir=${BlackShadowCoin_datadir} stop
+	wait_for_pids ${rc_pid}
+}
+
+load_rc_config $name
+run_rc_command "$1"
